@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napak Wheels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Napak Wheels</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#buy">Buy Cars</a>
+            <a href="#sell">Sell Cars</a>
+            <a href="#blog">Our Story</a>
+            <a href="#contact">Contact</a>
+            <button class="cart-btn" onclick="openCart()">Cart</button>
+        </nav>
+    </header>
+
+    <section class="search-section" id="home">
+        <h2>Find Your Dream Car</h2>
+        <div style="margin-top: 20px;">
+            <input type="text" id="search" placeholder="Search for cars..." style="padding: 12px; width: 70%; max-width: 500px;">
+            <button onclick="searchCar()" style="padding: 12px 25px;">Search</button>
+        </div>
+    </section>
+
+    <div class="car-listings-container">
+        <section id="buy" class="car-listings">
+            <div class="car-item">
+                <img src="./Pics/corollas.jpeg" alt="Toyota Corolla">
+                <h3>Toyota Corolla</h3>
+                <p>2023 Model • 15,000 km</p>
+                <p>Price: $15,000</p>
+                <button onclick="addToCart('Toyota Corolla', 15000)">Add to Cart</button>
+            </div>
+            <div class="car-item">
+                <img src="./Pics/civics.jpg" alt="Honda Civic">
+                <h3>Honda Civic</h3>
+                <p>2022 Model • 10,000 km</p>
+                <p>Price: $18,000</p>
+                <button onclick="addToCart('Honda Civic', 18000)">Add to Cart</button>
+            </div>
+            <div class="car-item">
+                <img src="./Pics/mehrans.jpg" alt="Suzuki Mehran">
+                <h3>Suzuki Mehran</h3>
+                <p>2020 Model • 45,000 km</p>
+                <p>Price: $5,000</p>
+                <button onclick="addToCart('Suzuki Mehran', 5000)">Add to Cart</button>
+            </div>
+        </section>
+    </div>
+
+    <section id="blog" class="blog-section">
+        <div class="blog-content">
+            <h2>From Junkyard to Revolution: The Napak Wheels Story</h2>
+            <div class="founder-story">
+                <p>In 2010, Ayyan Bhatti started with a small junkyard in Faisalabad, working day and night to rebuild damaged vehicles. With just ₨50,000 and a dream, he established Pakistan's first transparent used-car marketplace.</p>
+
+                <p>Through relentless effort and innovative solutions like our 200-point inspection system, Napak Wheels grew exponentially. Today, we handle over 50,000 transactions monthly, with a network spanning 35 cities.</p>
+
+                <p>"Our success lies in treating every customer like family," says Bhatti. "That junkyard taught me the value hidden in every vehicle - and every person."</p>
+
+                <h3>Milestones Achieved:</h3>
+                <ul>
+                    <li>🏆 2018: Crossed ₨1 billion in annual sales</li>
+                    <li>🏆 2020: Launched AI-powered vehicle valuation tool</li>
+                    <li>🏆 2023: Recognized as Pakistan's Most Trusted Auto Platform</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <p>&copy; 2025 Napak Wheels | All Rights Reserved</p>
+        <p style="margin-top: 15px;">Follow Us: 
+            <a href="#" style="color: #fff; text-decoration: none; margin: 0 10px;">Facebook</a> | 
+            <a href="#" style="color: #fff; text-decoration: none; margin: 0 10px;">Instagram</a>
+        </p>
+    </footer>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="modal-content">
+            <h3>Your Cart</h3>
+            <ul id="cartItems"></ul>
+            <p style="font-size: 1.2em; margin: 20px 0;">Total: $<span id="totalPrice">0</span></p>
+            <button onclick="confirmPurchase()" style="width: 100%; padding: 15px;">Complete Purchase</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(carName, price) {
+            cart.push({ carName, price });
+            total += price;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const totalPrice = document.getElementById('totalPrice');
+            cartItems.innerHTML = '';
+
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.carName} - $${item.price}`;
+                cartItems.appendChild(li);
+            });
+
+            totalPrice.textContent = total;
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function confirmPurchase() {
+            alert("Thank you for trusting Napak Wheels! Your purchase was successful.");
+            cart = [];
+            total = 0;
+            updateCart();
+            closeCart();
+        }
+
+        function searchCar() {
+            const query = document.getElementById('search').value.toLowerCase();
+            document.querySelectorAll('.car-item').forEach(item => {
+                const carName = item.querySelector('h3').textContent.toLowerCase();
+                item.style.display = carName.includes(query) ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
